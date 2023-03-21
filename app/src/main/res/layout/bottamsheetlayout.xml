@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:padding="10dp"
+    android:background="@drawable/bottamsheetdesign"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="@font/adamina"
+        android:text="Choose Your Service"
+        android:textColor="@color/blue"
+        android:textSize="19sp"
+        android:textStyle="bold"
+        />
+
+
+    <LinearLayout
+        android:layout_width="370dp"
+        android:backgroundTint="#E3E6F1"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/input_bg"
+        android:layout_height="90dp">
+
+
+        <ImageView
+            android:layout_width="83dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/citytruck" />
+
+        <Button
+            android:id="@+id/gotosecond"
+            android:layout_width="236dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="10dp"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/adamina"
+            android:background="@drawable/input_bg"
+            android:backgroundTint="#E3E6F1"
+            android:text="Local"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="370dp"
+        android:backgroundTint="#B0FAC5"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="10dp"
+        android:background="@drawable/input_bg"
+        android:layout_height="90dp">
+
+
+        <ImageView
+            android:layout_width="83dp"
+            android:layout_height="74dp"
+            android:layout_marginStart="32dp"
+            android:layout_marginTop="5dp"
+            android:src="@drawable/citytruck" />
+
+        <Button
+            android:id="@+id/gosecond"
+            android:layout_width="242dp"
+            android:layout_height="76dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/input_bg"
+            android:backgroundTint="#B0FAC5"
+            android:textAllCaps="false"
+            android:fontFamily="@font/adamina"
+            android:text="OutStation"
+            android:textColor="@color/black"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+</LinearLayout>

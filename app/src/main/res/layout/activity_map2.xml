@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Map2">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/mapFragment"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <EditText
+        android:id="@+id/edt_Source"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/input_bg"
+        android:backgroundTint="@color/white"
+        android:drawableStart="@drawable/search"
+        android:fontFamily="@font/adamina"
+        android:hint="@string/enter_source_location"
+        android:imeOptions="actionSearch"
+        android:padding="12dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+    <EditText
+        android:id="@+id/edt_Destination"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="10dp"
+        android:background="@drawable/input_bg"
+        android:backgroundTint="@color/white"
+        android:drawableStart="@drawable/search"
+        android:fontFamily="@font/adamina"
+        android:hint="@string/enter_destination_location"
+        android:imeOptions="actionSearch"
+        android:padding="12dp"
+        android:textColor="#000"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/txtKilometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="7dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="220dp"
+        android:background="@drawable/round_bg"
+        android:backgroundTint="@color/blue"
+        android:drawableStart="@drawable/destination"
+        android:fontFamily="@font/adamina"
+        android:padding="10dp"
+        android:textColor="@color/white"
+        android:textSize="15sp"
+        android:textStyle="bold" />
+
+
+
+    <Button
+        android:id="@+id/conforimlocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="760dp"
+        android:layout_marginStart="60dp"
+        android:layout_marginEnd="60dp"
+        android:background="@drawable/input_bg"
+        android:backgroundTint="@color/blue"
+        android:text="Confirm Location"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/adamina"/>
+
+</RelativeLayout>
