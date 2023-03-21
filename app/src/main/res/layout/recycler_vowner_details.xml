@@ -52,7 +52,7 @@
                 android:fontFamily="@font/adamina"
                 android:text="Kilometer :"
                 android:textColor="@color/black"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="bold"/>
 
 
@@ -62,7 +62,7 @@
                 android:fontFamily="@font/adamina"
                 android:text="Km"
                 android:textColor="@color/black"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="bold"/>
         </LinearLayout>
 
@@ -80,7 +80,7 @@
                 android:fontFamily="@font/adamina"
                 android:text="Charges :"
                 android:textColor="@color/black"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="bold"/>
 
 
@@ -90,8 +90,9 @@
                 android:fontFamily="@font/adamina"
                 android:text="Money"
                 android:textColor="@color/black"
-                android:textSize="17dp"
+                android:textSize="17sp"
                 android:textStyle="bold"/>
+
         </LinearLayout>
 
 
