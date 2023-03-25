@@ -10,8 +10,8 @@
         android:title="Order"/>
 
     <item android:id="@+id/payment"
-        android:icon="@drawable/wallet"
-        android:title="Payment"/>
+        android:icon="@drawable/cart"
+        android:title="Cart"/>
 
     <item android:id="@+id/profile"
         android:icon="@drawable/profile"

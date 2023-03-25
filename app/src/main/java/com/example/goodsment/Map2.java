@@ -52,6 +52,7 @@ import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -104,9 +105,13 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
 
     String origin;
     String destination;
+    Button button;
 
 
     APIInterface apiInterface;
+
+    Button boxAddtocart , cargoAddtocart,wheelerAddtocart,tataAddtocart;
+    BottomSheetDialog bottomSheetDialog;
     /////////////////////////////////////////////////////////
 
 
@@ -118,14 +123,20 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map2);
 
+
         //confrom location button
         conforimlocation=findViewById(R.id.conforimlocation);
-        conforimlocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(Map2.this,CartActivity.class));
-            }
-        });
+
+       conforimlocation.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               startActivity(new Intent(Map2.this,VahicleType.class));
+           }
+       });
+
+
+
+
 
 
 

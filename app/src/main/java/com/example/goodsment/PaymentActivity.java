@@ -19,7 +19,7 @@ import org.json.JSONObject;
 public class PaymentActivity extends AppCompatActivity implements PaymentResultListener {
 
 
-    Button button;
+    Button payment;
     TextView paytext;
 
     @SuppressLint("MissingInflatedId")
@@ -28,13 +28,13 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_payment);
 
-        button=findViewById(R.id.button);
+        payment=findViewById(R.id.payment);
         paytext=findViewById(R.id.paytext);
 
         Checkout.preload(getApplicationContext());
 
 
-        button.setOnClickListener(new View.OnClickListener() {
+        payment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
                 makepayment();
@@ -43,7 +43,7 @@ public class PaymentActivity extends AppCompatActivity implements PaymentResultL
     }
     private void makepayment() {
              Checkout checkout = new Checkout();
-            checkout.setKeyID("rzp_test_OQUnxxjchslS4B");
+            checkout.setKeyID("rzp_test_sqrqKLzFmNULDF");
 
             checkout.setImage(R.drawable.applogo);
             final Activity activity = this;
