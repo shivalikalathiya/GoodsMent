@@ -18,6 +18,8 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -124,6 +126,12 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         setContentView(R.layout.activity_map2);
 
 
+        Window window = this.getWindow();
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.setStatusBarColor(ContextCompat.getColor(this, R.color.blue));
+
+
         //confrom location button
         conforimlocation=findViewById(R.id.conforimlocation);
 
@@ -133,14 +141,6 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
                startActivity(new Intent(Map2.this,VahicleType.class));
            }
        });
-
-
-
-
-
-
-
-
 
 
         edt_Source = findViewById(R.id.edt_Source);
@@ -361,7 +361,7 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         distance = rad2deg(distance);
         distance = distance *60* 1.1515;
         distance = distance * 1.609344;
-        txtKilometer.setText(String.format(Locale.US,"%2f km",distance));
+        txtKilometer.setText(String.format(Locale.US,"%.2f km",distance));
     }
 
     private double rad2deg(double distance) {

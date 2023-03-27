@@ -69,6 +69,10 @@
     <string name="enter_origin_address">Enter origin address</string>
     <string name="enter_source_location">Enter Source Location</string>
     <string name="enter_destination_location">Enter Destination Location</string>
+    <string name="total_charges_00">Total Charges : 00</string>
+    <string name="checkout">Checkout</string>
+    <string name="_2_wheeler">2 Wheeler</string>
+    <string name="charges">Charges : 00</string>
 
     <!--    <string name="access_token">pk.eyJ1Ijoic2hpdmFsaTEyIiwiYSI6ImNsZjc3c2l2cTFkOXQzc28xM2dmMHMwZW4ifQ.CWwS6O0hvO5EJEUlmsZf3A </string>-->
     <!--    <string name="start_navigation">Start Navigation</string>-->
