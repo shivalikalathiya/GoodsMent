@@ -84,7 +84,7 @@ public class owner_login extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@androidx.annotation.NonNull com.google.android.gms.tasks.Task<AuthResult> task) {
                                             if (task.isSuccessful()) {
-                                                startActivity(new Intent(owner_login.this, MainActivity.class));
+                                                startActivity(new Intent(owner_login.this, owner_main.class));
                                                 Toast.makeText(owner_login.this, "Login Successful..", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Toast.makeText(owner_login.this, "Login Failed..", Toast.LENGTH_SHORT).show();

@@ -1,5 +1,6 @@
 package com.example.goodsment;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,9 +17,9 @@ public class SplashActivity extends AppCompatActivity {
 
 
     LottieAnimationView animationView;
-    //@SuppressLint("MissingInflatedId")
+    @SuppressLint("MissingInflatedId")
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
@@ -33,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 animationView.playAnimation();
-                startActivity(new Intent(SplashActivity.this, onboarding.class));
+                startActivity(new Intent(SplashActivity.this, ChooseUser.class));
                 finish();
             }
         },5000);
