@@ -67,7 +67,7 @@ public class onboarding extends AppCompatActivity {
         btnsikp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(onboarding.this,ChooseUser.class));
+                startActivity(new Intent(onboarding.this,ChooseUser .class));
             }
         });
 

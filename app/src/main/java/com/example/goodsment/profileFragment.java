@@ -13,32 +13,44 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class profileFragment extends Fragment {
 
     TextView txtemail , txtname;
-    RelativeLayout profileclick , settingclick , legalclick , privacyclick , aboutusclick , shareclick  ,rateclick;
+    RelativeLayout rightarrow , settingclick , legalclick , privacyclick , aboutusclick , shareclick  ,rateclick;
 
     LinearLayout logoutclick;
 
     FirebaseAuth mAuth;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
+    FirebaseStorage storage;
 
+    CircleImageView profileimg;
+    public Uri imageUri;
+    private Object taskSnapshot;
 
     public profileFragment() {
 
@@ -61,14 +73,28 @@ public class profileFragment extends Fragment {
         aboutusclick = view.findViewById(R.id.aboutusclick);
         settingclick = view.findViewById(R.id.settingclick);
         legalclick = view.findViewById(R.id.legalclick);
-        profileclick = view.findViewById(R.id.profileclick);
+        rightarrow = view.findViewById(R.id.rightarrow);
         privacyclick = view.findViewById(R.id.privacyclick);
         shareclick = view.findViewById(R.id.shareclick);
         logoutclick = view.findViewById(R.id.logoutclick);
         rateclick = view.findViewById(R.id.rateclick);
         txtname = view.findViewById(R.id.txtname);
         txtemail = view.findViewById(R.id.txtemail);
+        
+        //upload img
+        profileimg = view.findViewById(R.id.profileimg);
+        profileimg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                intent.setType("image/*");
+                startActivityForResult(intent,33);
+                updateUserProfile();
+            }
+        });
 
+  ///////////////////////////////////////////////
         mAuth = FirebaseAuth.getInstance();
         String email = mAuth.getCurrentUser().getEmail();
         txtemail.setText(email);
@@ -76,6 +102,7 @@ public class profileFragment extends Fragment {
 
         firebaseDatabase = FirebaseDatabase.getInstance();
         databaseReference = firebaseDatabase.getReference("User/Registration");
+        storage=FirebaseStorage.getInstance();
 
         databaseReference.child(st).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -100,7 +127,7 @@ public class profileFragment extends Fragment {
             }
         });
 
-        profileclick.setOnClickListener(new View.OnClickListener() {
+        rightarrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(getActivity() , MyProfile.class));
@@ -175,6 +202,36 @@ public class profileFragment extends Fragment {
 
         return view;
     }
+
+
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    private void updateUserProfile() {
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (data.getData() != null){
+            Uri profileUri = data.getData();
+            profileimg.setImageURI(profileUri);
+            final StorageReference reference = storage.getReference().child("Profile Image")
+                    .child(FirebaseAuth.getInstance().getUid());
+            reference.putFile(profileUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    Toast.makeText(getContext(), "Uploaded", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+
+    
+    
+
     private Intent rateIntentForUrl(String url)
     {
         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(String.format("%s?id=%s", url, getActivity().getPackageName())));

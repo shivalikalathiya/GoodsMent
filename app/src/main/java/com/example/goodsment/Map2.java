@@ -123,7 +123,7 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_map2);
+        setContentView(R.layout.activity_map);
 
 
         Window window = this.getWindow();
@@ -138,6 +138,12 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
        conforimlocation.setOnClickListener(new View.OnClickListener() {
            @Override
            public void onClick(View v) {
+
+               //String kilometer = txtKilometer.getText().toString();
+               Intent intent = new Intent(getApplicationContext(),VahicleType.class);
+               intent.putExtra("Kilometer",15);
+               startActivity(intent);
+
                startActivity(new Intent(Map2.this,VahicleType.class));
            }
        });
@@ -362,6 +368,13 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         distance = distance *60* 1.1515;
         distance = distance * 1.609344;
         txtKilometer.setText(String.format(Locale.US,"%.2f km",distance));
+
+
+        ////put extra//////////////////////////////////////////////////////////////////////////////////////
+
+
+
+        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     private double rad2deg(double distance) {

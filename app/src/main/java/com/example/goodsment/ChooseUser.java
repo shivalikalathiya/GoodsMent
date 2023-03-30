@@ -6,16 +6,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.widget.LinearLayout;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 public class ChooseUser extends AppCompatActivity {
 
-    ImageView imgUser,imgOwner;
-    TextView User,Owner;
+
+    LinearLayout us1 , us2;
+
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -30,42 +30,28 @@ public class ChooseUser extends AppCompatActivity {
 
         setContentView(R.layout.activity_choose_user);
 
-        imgUser = findViewById(R.id.imgUser);
-        imgOwner = findViewById(R.id.imgOwner);
 
-        User = findViewById(R.id.User);
-        Owner = findViewById(R.id.Owner);
+        us1 = findViewById(R.id.us1);
+        us2 = findViewById(R.id.us2);
 
 
 
-        imgUser.setOnClickListener(new View.OnClickListener() {
+        us1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(new Intent(ChooseUser.this,signin.class));
             }
         });
 
-        imgOwner.setOnClickListener(new View.OnClickListener() {
+        us2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(ChooseUser.this,signin.class));
+                startActivity(new Intent(ChooseUser.this,owner_login.class));
             }
         });
 
 
 
-        User.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ChooseUser.this,signin.class));
-            }
-        });
 
-        Owner.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(ChooseUser.this,signin.class));
-            }
-        });
     }
 }

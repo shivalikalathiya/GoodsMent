@@ -6,12 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".legalActivity">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:title="Legal "
+        app:titleTextColor="@android:color/white" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="393dp"
         android:layout_height="114dp"
         android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="80dp"
         android:layout_marginEnd="20dp"
         app:cardCornerRadius="20dp"
         app:cardElevation="15dp"
@@ -29,7 +38,7 @@
                 android:layout_width="314dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:fontFamily="@font/adamina"
                 android:text="Terms and Condition"
                 android:textColor="@color/black"
@@ -40,6 +49,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginTop="40dp"
                 android:layout_centerVertical="true"
                 android:src="@drawable/rightarrow" />
 
@@ -58,7 +68,7 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="140dp"
+                android:layout_marginTop="160dp"
                 android:fontFamily="@font/adamina"
                 android:text="Privacy Policy"
                 android:textColor="@color/black"
@@ -70,6 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
+                android:layout_marginTop="1dp"
                 android:src="@drawable/rightarrow" />
 
         </RelativeLayout>

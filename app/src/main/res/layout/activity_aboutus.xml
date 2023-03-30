@@ -37,24 +37,15 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <androidx.cardview.widget.CardView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:cardCornerRadius="20dp"
-                app:cardElevation="25dp"
-                android:backgroundTint="#C2D9FD"
-                android:layout_gravity="center">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="GoodsMents"
-                    android:textSize="40dp"
+                    android:textSize="30dp"
+                    android:layout_gravity="center"
                     android:textStyle="bold"
                     android:textColor="@color/black"
                     android:fontFamily="@font/adamina"/>
-
-            </androidx.cardview.widget.CardView>
 
             <TextView
                 android:layout_marginStart="30dp"
@@ -62,7 +53,8 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="transportation_the_movement_of_goods_and_persons_from_place_to_place_and_the_various_means_by_which_such_movement_is_accomplished"
+                android:layout_gravity="center"
+                android:text="transportation the movement of goods and persons from place to place and the various means by which such movement is accomplished"
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 android:textSize="20sp"/>
@@ -70,7 +62,7 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@drawable/a2"/>
+                android:src="@drawable/topremove1"/>
 
             <TextView
                 android:layout_marginStart="30dp"
@@ -78,7 +70,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="transportation_refers_to_any_vehicle_or_activity_that_moves_people_and_goods_from_one_place_to_another"
+                android:text="transportation refers to any vehicle or activity that moves people and goods from one place to another"
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 android:textSize="20sp"/>
@@ -87,7 +79,7 @@
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:src="@drawable/a1"/>
+                android:src="@drawable/topremove2"/>
 
             <TextView
                 android:layout_marginStart="30dp"
@@ -95,7 +87,7 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="transport_uses_a_lot_of_energy_most_transport_uses_hydrocarbons_this_can_create_pollution_environmental_regulations_and_low_pollution_fuels_can_reduce_pollution"
+                android:text="transport uses a lot of energy most transport uses hydrocarbons this can create pollution environmental regulations and low pollution fuels can reduce pollution"
                 android:textColor="@color/black"
                 android:textStyle="italic"
                 android:textSize="20sp"/>

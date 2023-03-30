@@ -27,7 +27,7 @@ public class fragment_bottam_sheet_dailog extends Fragment {
         cardLocal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(),MainActivity2.class);
+                Intent intent = new Intent(getActivity(),Map2.class);
                 startActivity(intent);
             }
         });

@@ -50,9 +50,6 @@ public class MainActivity extends AppCompatActivity  {
                         fragmentRepl(new orderFragment());
                         break;
 
-                    case R.id.payment:
-                        fragmentRepl(new paymentFragment());
-                        break;
 
                     case R.id.profile:
                         fragmentRepl(new profileFragment());

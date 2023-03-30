@@ -3,26 +3,79 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".VahicleType">
+
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/vehicletype"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/blue"
+        app:title="Vahicle Type"
+        app:titleTextColor="@color/white">
+
+
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Select Vahicle Type"
+        android:layout_marginTop="90dp"
+        android:textColor="@color/black"
+        android:textSize="23sp"
+        android:textStyle="bold"
+        android:fontFamily="@font/adamina"
+        android:layout_marginStart="20dp"/>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="535dp"
+        android:layout_marginTop="120dp" />
+
+
+    <TextView
+        android:id="@+id/totalkilometer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="600dp"
+        android:fontFamily="@font/adamina"
+        android:text="Total Kilometr :"
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/textview"
+        android:layout_width="59dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="170dp"
+        android:layout_marginTop="600dp"
+        android:fontFamily="@font/adamina"
+        android:text=""
+        android:textColor="@color/blue"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
 
     <TextView
         android:id="@+id/totalCharge"
-        android:layout_width="match_parent"
+        android:layout_width="378dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="550dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="650dp"
         android:fontFamily="@font/adamina"
         android:gravity="center"
         android:text="@string/total_charges_00"
         android:textColor="@color/blue"
-        android:textSize="20sp"
+        android:textSize="25sp"
         android:textStyle="bold" />
+
 
 
     <Button
@@ -30,7 +83,7 @@
         android:layout_width="357dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="30dp"
-        android:layout_marginTop="600dp"
+        android:layout_marginTop="730dp"
         android:layout_marginEnd="30dp"
         android:background="@drawable/input_bg"
         android:backgroundTint="@color/blue"
@@ -38,7 +91,7 @@
         android:text="@string/checkout"
         android:textAllCaps="false"
         android:textColor="@color/white"
-        android:textSize="15sp"
+        android:textSize="18sp"
         android:textStyle="bold">
 
     </Button>

@@ -42,6 +42,11 @@ public class homeFragment extends Fragment {
 
             view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if(actionBar != null){
+            actionBar.setTitle("Home");
+        }
+
             imageSlider = view.findViewById(R.id.image_slider);
 
             goodstruck=view.findViewById(R.id.goodstruck);
@@ -91,10 +96,6 @@ public class homeFragment extends Fragment {
         imageSlider.setImageList(slideModels,ScaleTypes.FIT);
 
 
-        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
-        if (actionBar != null){
-            actionBar.setTitle("Home");
-        }
 
         return view;
 

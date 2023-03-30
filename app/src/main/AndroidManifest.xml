@@ -2,6 +2,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
+
     <permission
         android:name="your.package.name.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
@@ -39,9 +44,45 @@
         android:theme="@style/Theme.MaterialComponents.Light"
         tools:targetApi="31">
         <activity
+            android:name=".ownerDeleteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ownerSoftwareActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ownerSettingsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ownerMyprofileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ownerAddLabourActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ownerLabourActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ownerOrderActivity"
+            android:exported="false" />
+        <activity
+            android:name=".owner_main"
+            android:exported="false" />
+        <activity
+            android:name=".owner_forgot"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".owner_signup"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
+            android:name=".owner_login"
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
+        <activity
             android:name=".VahicleType"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:exported="true" />
+            android:exported="true"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".ChangePassword"
             android:exported="true"
@@ -55,16 +96,9 @@
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".MainActivity2"
-            android:exported="false" />
-        <activity
             android:name=".PaymentActivity"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
-        <activity
-            android:name=".GoodsType"
-            android:exported="true"
-            android:theme="@style/Theme.MaterialComponents.Light.NoActionBar" />
         <!--
              TODO: Before you run your application, you need a Google Maps API key.
 
