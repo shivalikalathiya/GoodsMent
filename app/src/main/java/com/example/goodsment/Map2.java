@@ -30,6 +30,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.goodsment.Model.KilometerModel;
 import com.example.goodsment.api.APIClient;
 import com.example.goodsment.api.APIInterface;
 import com.example.goodsment.api.ModelRoutes;
@@ -55,6 +56,10 @@ import com.google.android.libraries.places.widget.Autocomplete;
 import com.google.android.libraries.places.widget.AutocompleteActivity;
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.karumi.dexter.Dexter;
 import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionDeniedResponse;
@@ -65,6 +70,7 @@ import com.karumi.dexter.listener.single.PermissionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 
@@ -77,24 +83,19 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
     private String googleApi = "AIzaSyB1MpR_z_aGwXTyhzt8ve2lCl1-a7DfQ_E";
     private static int AUTOCOMPLETE_REQUEST_CODE = 1;
     GoogleMap googleMap;
-    EditText edt_Source,edt_Destination;
+    EditText edt_Source, edt_Destination;
     TextView txtKilometer;
     List<Place.Field> fields;
     Place place;
     String latitude = "", longitude = "";
-
     String sType;
-    double lat1 = 0,long1=0,lat2=0,long2=0;
+    double lat1 = 0, long1 = 0, lat2 = 0, long2 = 0;
     int flag = 0;
     Button conforimlocation;
-
-
-
-
-
-
-    //////////////////////////////////////////////////////////
-
+    FirebaseFirestore db;
+    FirebaseDatabase firebaseDatabase;
+    DatabaseReference databaseReference ;
+    KilometerModel kilometerModel;
     private static final String FINE_LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     private static final String COURSE_LOCATION = Manifest.permission.ACCESS_COARSE_LOCATION;
     private static final int LOCATION_PERMISSION_REQUEST_CODE = 1234;
@@ -104,27 +105,21 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
     private FusedLocationProviderClient mFusedLocationProviderClient;
     private GoogleMap mMap;
     private SupportMapFragment mapFragment;
-
     String origin;
     String destination;
     Button button;
-
-
     APIInterface apiInterface;
 
-    Button boxAddtocart , cargoAddtocart,wheelerAddtocart,tataAddtocart;
+    Button boxAddtocart, cargoAddtocart, wheelerAddtocart, tataAddtocart;
     BottomSheetDialog bottomSheetDialog;
-    /////////////////////////////////////////////////////////
-
-
-
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
-
+        //Crashlytics
+        FirebaseCrashlytics.getInstance();
 
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -132,21 +127,38 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         window.setStatusBarColor(ContextCompat.getColor(this, R.color.blue));
 
 
+        db = FirebaseFirestore.getInstance();
+
         //confrom location button
-        conforimlocation=findViewById(R.id.conforimlocation);
+        conforimlocation = findViewById(R.id.conforimlocation);
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        databaseReference = firebaseDatabase.getReference("Vehicle Type/Kilometer");
 
-       conforimlocation.setOnClickListener(new View.OnClickListener() {
-           @Override
-           public void onClick(View v) {
+        conforimlocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String Kilometer = txtKilometer.getText().toString();
+                HashMap<String,String> kilometermap = new HashMap<>();
+                kilometermap.put("kilometer",Kilometer);
 
-               //String kilometer = txtKilometer.getText().toString();
-               Intent intent = new Intent(getApplicationContext(),VahicleType.class);
-               intent.putExtra("Kilometer",15);
-               startActivity(intent);
+                databaseReference.push().setValue(kilometermap);
+                Toast.makeText(Map2.this, "Inserted..", Toast.LENGTH_SHORT).show();
 
-               startActivity(new Intent(Map2.this,VahicleType.class));
-           }
-       });
+
+
+                //putextra///////////////////////////////////////
+                storeKilometers(); // Store Kilometers into Firestore Firebase Database
+                String kilometer = txtKilometer.getText().toString();
+                Intent intent = new Intent(Map2.this, VahicleType.class);
+                intent.putExtra("Kilometer", kilometer);
+                startActivity(intent);
+
+                // firestore kilometer
+
+
+
+            }
+        });
 
 
         edt_Source = findViewById(R.id.edt_Source);
@@ -169,13 +181,12 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
 
         apiInterface = APIClient.getClient().create(APIInterface.class);
 
-        //Autocomplete texyview///////////////////////////////////////////////////////////////////
-
+        //Autocomplete textview
         edt_Source.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sType = "Source";
-                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG);
+                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
                 Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
                         .build(Map2.this);
                 startActivityForResult(intent, 100);
@@ -191,8 +202,8 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
             public void onClick(View v) {
 
                 sType = "Destination";
-                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS,Place.Field.LAT_LNG);
-                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY,fields)
+                List<Place.Field> fields = Arrays.asList(Place.Field.ADDRESS, Place.Field.LAT_LNG);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fields)
                         .build(Map2.this);
                 startActivityForResult(intent, 100);
 
@@ -202,70 +213,49 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         //textview for kilometer
 
         txtKilometer.setText("0.0 Km");
-        if(!Places.isInitialized()){
-            Places.initialize(getApplicationContext(),googleApi);
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), googleApi);
 
         }
         PlacesClient placesClient = Places.createClient(this);
 
-        fields = Arrays.asList(Place.Field.ID, Place.Field.NAME,Place.Field.ADDRESS,Place.Field.LAT_LNG);
-
+        fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG);
 
 
     }
 
+    //////////////////////////////////////////////
     @Override
-    protected void onActivityResult(int requestCode,int resultCode,@NonNull Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if (requestCode == 100 && resultCode == RESULT_OK){
-            if (resultCode == RESULT_OK){
+    protected void onActivityResult(int requestCode, int resultCode, @NonNull Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 place = Autocomplete.getPlaceFromIntent(data);
-                if (sType.equals("Source")){
+                if (sType.equals("Source")) {
                     flag++;
-                    Log.i(TAG,"Place ==================>>>:" + place.getName() + "," + place.getId());
+                    Log.i(TAG, "Place ==================>>>:" + place.getName() + "," + place.getId());
                     edt_Source.setText(place.getAddress());
-                    origin= place.getAddress();
+                    origin = place.getAddress();
                     String sSource = String.valueOf(place.getLatLng());
-                    sSource = sSource.replaceAll("lat/lng:","");
-                    sSource = sSource.replace("(","");
-                    sSource = sSource.replace(")","");
+                    sSource = sSource.replaceAll("lat/lng:", "");
+                    sSource = sSource.replace("(", "");
+                    sSource = sSource.replace(")", "");
                     String[] split = sSource.split(",");
                     lat1 = Double.parseDouble(split[0]);
                     long1 = Double.parseDouble(split[1]);
 
-//                    Log.d(TAG, "onActivityResult: =====>>> "+lat1);
-//                    Log.d(TAG, "onActivityResult: =====>>> "+long1);
-
-//                    LatLng latLng = new LatLng(lat1, long1);
-//                    MarkerOptions markerOptions = new MarkerOptions();
-//                    markerOptions.title("My Position");
-//                    markerOptions.position(latLng);
-//                    googleMap.addMarker(markerOptions);
-//                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-//                    googleMap.animateCamera(cameraUpdate);
-
-                }else {
+                } else {
                     flag++;
                     edt_Destination.setText(place.getAddress());
-                    destination= place.getAddress();
+                    destination = place.getAddress();
 
                     String sDestination = String.valueOf(place.getLatLng());
-                    sDestination=sDestination.replaceAll("lat/lng: ","");
-                    sDestination = sDestination.replace("(","");
-                    sDestination = sDestination.replace(")","");
+                    sDestination = sDestination.replaceAll("lat/lng: ", "");
+                    sDestination = sDestination.replace("(", "");
+                    sDestination = sDestination.replace(")", "");
                     String[] split = sDestination.split(",");
                     lat2 = Double.parseDouble(split[0]);
                     long2 = Double.parseDouble(split[1]);
-
-//                    LatLng latLng = new LatLng(lat2, long2);
-//                    MarkerOptions markerOptions = new MarkerOptions();
-//                    markerOptions.title("My Position");
-//                    markerOptions.position(latLng);
-//                    googleMap.addMarker(markerOptions);
-//                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
-//                    googleMap.animateCamera(cameraUpdate);
-
-
 
 
                     Call<ModelRoutes> call = apiInterface.getResponseDistance(origin, destination, googleApi);
@@ -279,9 +269,14 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
                                 List<LatLng> points = decodePolyline(directions.getRoutes().get(0).getOverviewPolyline().getPoints());
                                 PolylineOptions options = new PolylineOptions()
                                         .addAll(points)
-                                        .color(Color.BLUE)
+                                        .color(Color.BLACK)
                                         .width(5);
                                 googleMap.addPolyline(options);
+
+
+
+
+
 
                                 // add markers for the source and destination
                                 LatLng originLatLng = new LatLng(directions.getRoutes().get(0).getLegs().get(0).getStartLocation().getLat(),
@@ -302,23 +297,22 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
                     });
 
 
-
                 }
 
-                if (flag >= 2){
-                    distance(lat1,long1,lat2,long2);
+                if (flag >= 2) {
+                    distance(lat1, long1, lat2, long2);
                 }
 
-                longitude=String.valueOf(place.getLatLng().longitude);
-                latitude=String.valueOf(place.getLatLng().latitude);
+                longitude = String.valueOf(place.getLatLng().longitude);
+                latitude = String.valueOf(place.getLatLng().latitude);
 
             } else if (resultCode == RESULT_ERROR) {
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Log.i(TAG,status.getStatusMessage());
+                Log.i(TAG, status.getStatusMessage());
 
             } else if (requestCode == AutocompleteActivity.RESULT_ERROR) {
                 Status status = Autocomplete.getStatusFromIntent(data);
-                Toast.makeText(getApplicationContext(),status.getStatusMessage(),Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), status.getStatusMessage(), Toast.LENGTH_SHORT).show();
 
             }
         }
@@ -359,45 +353,39 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
     private void distance(double lat1, double long1, double lat2, double long2) {
         double longDiff = long1 - long2;
         double distance = Math.sin(deg2rad(lat1))
-                *Math.sin(deg2rad(lat2))
-                +Math.cos(deg2rad(lat1))
-                *Math.cos(deg2rad(lat2))
-                *Math.cos(deg2rad(longDiff));
-        distance= Math.acos(distance);
+                * Math.sin(deg2rad(lat2))
+                + Math.cos(deg2rad(lat1))
+                * Math.cos(deg2rad(lat2))
+                * Math.cos(deg2rad(longDiff));
+        distance = Math.acos(distance);
         distance = rad2deg(distance);
-        distance = distance *60* 1.1515;
+        distance = distance * 60 * 1.1515;
         distance = distance * 1.609344;
-        txtKilometer.setText(String.format(Locale.US,"%.2f km",distance));
+        txtKilometer.setText(String.format(Locale.US, "%.2f km", distance));
 
 
-        ////put extra//////////////////////////////////////////////////////////////////////////////////////
-
-
-
-        ////////////////////////////////////////////////////////////////////////////////////////////////////////////
     }
 
     private double rad2deg(double distance) {
-        return (distance * 180.0/Math.PI);
+        return (distance * 180.0 / Math.PI);
     }
 
     private double deg2rad(double lat1) {
-        return (lat1*Math.PI/180.0);
+        return (lat1 * Math.PI / 180.0);
     } // textview close
 
-    //////////////////////////////////////////////////////////////////////////////////////
 
-    private  void geoLocate(){
+    private void geoLocate() {
         Log.d(TAG, "geoLocate: geolocating");
         String searchString = edt_Source.getText().toString();
         Geocoder geocoder = new Geocoder(Map2.this);
         List<Address> list = new ArrayList<>();
         try {
             list = geocoder.getFromLocationName(searchString, 1);
-        }catch (IOException e){
+        } catch (IOException e) {
             Log.e(TAG, "geoLocate: IOExecption: " + e.getMessage());
         }
-        if (list.size() > 0){
+        if (list.size() > 0) {
             Address address = list.get(0);
 
             Log.d(TAG, "geoLocate: found a location :" + address.toString());
@@ -405,57 +393,57 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
     }
 
 
-    private void getDeviceLocation(){
+    private void getDeviceLocation() {
         Log.d(TAG, "getDeviceLocation: getting the  device current location");
         mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
-        try{
-            if (mLocationPermissionGranted){
+        try {
+            if (mLocationPermissionGranted) {
                 Task location = mFusedLocationProviderClient.getLastLocation();
                 location.addOnCompleteListener(new OnCompleteListener() {
                     @Override
                     public void onComplete(@NonNull Task task) {
-                        if (task.isSuccessful()){
+                        if (task.isSuccessful()) {
                             Log.d(TAG, "onComplete: found location");
-                            Location currentLocation =(Location) task.getResult();
+                            Location currentLocation = (Location) task.getResult();
 
-//                            moveCamera(new LatLng(currentLocation.getLatitude(),currentLocation.getLongitude()),
-//                                    DEFAULT_ZOOM,"My Location");
 
-                        }else {
+                        } else {
                             Log.d(TAG, "onComplete: cureent location is null");
                             Toast.makeText(Map2.this, "unable to get current location", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
             }
-        }catch (SecurityException e){
+        } catch (SecurityException e) {
             Log.d(TAG, "getDeviceLocation: SecurityException" + e.getMessage());
         }
     }
 
 
-    private void  initMap(){
+    private void initMap() {
         Log.d(TAG, "initMap: initializing map");
-        SupportMapFragment mapFragment=(SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.mapFragment);
         mapFragment.getMapAsync(Map2.this);
     }
-    private void getLocationPermission(){
+
+    private void getLocationPermission() {
         Log.d(TAG, "getLocationPermission: getting location permissions");
         String[] permission = {Manifest.permission.ACCESS_FINE_LOCATION,
                 Manifest.permission.ACCESS_COARSE_LOCATION};
 
         if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
             if (ContextCompat.checkSelfPermission(this.getApplicationContext(),
-                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+                    COURSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
                 mLocationPermissionGranted = true;
                 initMap();
-            }else {
-                ActivityCompat.requestPermissions(this,permission,LOCATION_PERMISSION_REQUEST_CODE);
+            } else {
+                ActivityCompat.requestPermissions(this, permission, LOCATION_PERMISSION_REQUEST_CODE);
             }
 
         }
     }
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantRsults) {
         Log.d(TAG, "onRequestPermissionsResult: called.");
@@ -465,9 +453,9 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         switch (requestCode) {
             case LOCATION_PERMISSION_REQUEST_CODE: {
                 if (grantRsults.length > 0) {
-                    for (int i=0; i<grantRsults.length;i++){
-                        if (grantRsults[i] != PackageManager.PERMISSION_GRANTED){
-                            mLocationPermissionGranted=false;
+                    for (int i = 0; i < grantRsults.length; i++) {
+                        if (grantRsults[i] != PackageManager.PERMISSION_GRANTED) {
+                            mLocationPermissionGranted = false;
                             Log.d(TAG, "onRequestPermissionsResult: permissions failed");
                             return;
                         }
@@ -537,6 +525,7 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
         markerOptions.position(latLng);
         googleMap.addMarker(markerOptions);
         CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(latLng, 15);
+
         googleMap.animateCamera(cameraUpdate);
 
         googleMap.getUiSettings().setZoomControlsEnabled(true);
@@ -548,18 +537,53 @@ public class Map2 extends AppCompatActivity implements OnMapReadyCallback {
                 (this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         googleMap.setMyLocationEnabled(true);
 
     }
 
+
+
+
     private class DirectionsResponse {
+    }
+
+    private void storeKilometers() {
+
+
+//        databaseReference.addValueEventListener(new ValueEventListener() {
+//            @Override
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot items : snapshot.getChildren()) {
+//                        items.child("kilometer");
+//                        databaseReference.setValue(Kilometer);
+//                    Toast.makeText(Map2.this, "inserted", Toast.LENGTH_SHORT).show();
+//            }
+//                if (snapshot.child("Kilometer").exists()) {
+//                    databaseReference.child(Kilometer).setValue(kilometerModel);
+//                    databaseReference.setValue(Kilometer);
+//
+//                    Toast.makeText(Map2.this, "failed", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
+//
+//            }
+//        });
+//        Map<String,String>items=new HashMap<>();
+//        items.put("Kilometer",txtKilometer.getText().toString().trim());
+//
+//        db.collection("Kilometer").add(items)
+//                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+//            @Override
+//            public void onComplete(@NonNull Task<DocumentReference> task) {
+//                txtKilometer.setText("");
+//                Toast.makeText(Map2.this, "Kilometer inserted successfully", Toast.LENGTH_SHORT).show();
+//            }
+//        });
     }
 
 

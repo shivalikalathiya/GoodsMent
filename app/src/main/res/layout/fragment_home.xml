@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/screenbackground"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".homeFragment">
 
@@ -121,11 +122,6 @@
             android:layout_height="300dp"
             android:layout_marginTop="490dp"
             android:orientation="vertical">
-
-
-
-
-
 
         </LinearLayout>
 

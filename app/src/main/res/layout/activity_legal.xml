@@ -7,14 +7,12 @@
     tools:context=".legalActivity">
 
     <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:title="Legal "
-        app:titleTextColor="@android:color/white" />
+        app:titleTextColor="@android:color/white"
+        tools:ignore="MissingConstraints" />
 
     <androidx.cardview.widget.CardView
         android:layout_width="393dp"

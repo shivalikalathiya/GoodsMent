@@ -37,14 +37,14 @@ public class signin extends Activity {
     public signin() {
     }
 
-//    protected void onStart() {
-//        super.onStart();
-//        if (mAuth.getCurrentUser() != null) {
-//            startActivity(new Intent(signin.this, MainActivity.class));
-//            finish();
-//        }
-//        super.onStart();
-//    }
+    protected void onStart() {
+        super.onStart();
+        if (mAuth.getCurrentUser() != null) {
+            startActivity(new Intent(signin.this, MainActivity.class));
+            finish();
+        }
+        super.onStart();
+    }
 
 
 

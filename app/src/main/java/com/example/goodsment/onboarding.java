@@ -64,12 +64,12 @@ public class onboarding extends AppCompatActivity {
             }
         });
 
-        btnsikp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(onboarding.this,ChooseUser .class));
-            }
-        });
+//        btnsikp.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(onboarding.this,ChooseUser .class));
+//            }
+//        });
 
         mSlideViewPager = (ViewPager) findViewById(R.id.slideviewpager);
         mDotLayout = (LinearLayout) findViewById(R.id.indicator);

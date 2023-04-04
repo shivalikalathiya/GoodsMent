@@ -10,7 +10,7 @@
         android:id="@+id/linearLayout"
         android:layout_width="429dp"
         android:layout_height="266dp"
-        android:background="@drawable/screenbackground"
+        android:background="@drawable/screenbg"
         android:orientation="horizontal"
         tools:ignore="MissingConstraints">
 

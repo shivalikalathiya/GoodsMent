@@ -18,6 +18,7 @@ import com.denzcoskun.imageslider.ImageSlider;
 import com.denzcoskun.imageslider.constants.ScaleTypes;
 import com.denzcoskun.imageslider.models.SlideModel;
 import com.google.android.material.bottomsheet.BottomSheetDialog;
+import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public class homeFragment extends Fragment {
 
             view = inflater.inflate(R.layout.fragment_home, container, false);
 
+        FirebaseCrashlytics.getInstance();
         ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
         if(actionBar != null){
             actionBar.setTitle("Home");

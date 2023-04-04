@@ -34,7 +34,7 @@ public class SplashActivity extends AppCompatActivity {
             @Override
             public void run() {
                 animationView.playAnimation();
-                startActivity(new Intent(SplashActivity.this, ChooseUser.class));
+                startActivity(new Intent(SplashActivity.this, signin.class));
                 finish();
             }
         },5000);

@@ -74,6 +74,7 @@
     <string name="_2_wheeler">2 Wheeler</string>
     <string name="charges">Charges : 00</string>
     <string name="enter_name">enter name</string>
+    <string name="confirm_location">Confirm Location</string>
 
     <!--    <string name="access_token">pk.eyJ1Ijoic2hpdmFsaTEyIiwiYSI6ImNsZjc3c2l2cTFkOXQzc28xM2dmMHMwZW4ifQ.CWwS6O0hvO5EJEUlmsZf3A </string>-->
     <!--    <string name="start_navigation">Start Navigation</string>-->
